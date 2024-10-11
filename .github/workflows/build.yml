@@ -37,6 +37,10 @@ jobs:
     #   run: |
     #     7z a -mx9 ..\v2rayN.7z $env:Wap_Project_Directory
 
+    - name: Release notes
+      run: |
+        echo "Release package" > RELEASE_NOTES
+    
     - name: Push assets to release branch
       run: |
         cd v2rayN || exit 1
@@ -45,20 +49,20 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git checkout -b release
         git add .
-        git commit -m "${{ env.RELEASE_NAME }}"
+        git commit -m "Release"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
         git push -f origin release
 
     - name: Release and upload assets
       uses: softprops/action-gh-release@v1
       with:
-        name: ${{ env.RELEASE_NAME }}
-        tag_name: ${{ env.TAG_NAME }}
+        name: V2RayN
+        tag_name: Latest
         body_path: RELEASE_NOTES
         draft: false
         prerelease: false
         files: |
-          .\v2rayN\v2rayN.zip
+          v2rayN/v2rayN.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
