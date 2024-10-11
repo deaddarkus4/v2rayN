@@ -36,6 +36,11 @@ jobs:
     #   shell: pwsh
     #   run: |
     #     7z a -mx9 ..\v2rayN.7z $env:Wap_Project_Directory
+
+    - name: Release notes
+      run: |
+        echo "Release package" > RELEASE_NOTES
+    
     - name: Push assets to release branch
       run: |
         cd v2rayN || exit 1
