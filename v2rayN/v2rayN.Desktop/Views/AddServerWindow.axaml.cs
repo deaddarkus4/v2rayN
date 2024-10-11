@@ -42,6 +42,12 @@ namespace v2rayN.Desktop.Views
             }
             cmbCoreType.Items.Add(string.Empty);
 
+            if (cmbCoreType.Items.Contains("sing_box"))
+            {
+                cmbCoreType.SelectedIndex = cmbCoreType.Items.IndexOf("sing_box");
+                //cmbCoreType.SelectedValue = "sing_box";
+            }
+
             cmbStreamSecurity.Items.Add(string.Empty);
             cmbStreamSecurity.Items.Add(Global.StreamSecurity);
 

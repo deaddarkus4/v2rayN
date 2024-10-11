@@ -1113,6 +1113,8 @@ namespace ServiceLib.Handler
                 profileItem.subid = subid;
                 profileItem.isSub = isSub;
 
+                profileItem.coreType = ECoreType.sing_box;
+
                 var addStatus = profileItem.configType switch
                 {
                     EConfigType.VMess => AddVMessServer(config, profileItem, false),
@@ -1625,18 +1627,18 @@ namespace ServiceLib.Handler
             {
                 var maxSort = items.Count;
                 //Bypass the mainland
-                var item2 = new RoutingItem()
-                {
-                    remarks = $"{ver}绕过大陆(Whitelist)",
-                    url = string.Empty,
-                    sort = maxSort + 1,
-                };
-                AddBatchRoutingRules(ref item2, Utils.GetEmbedText(Global.CustomRoutingFileName + "white"));
+                //var item2 = new RoutingItem()
+                //{
+                //    remarks = $"{ver}绕过大陆(Whitelist)",
+                //    url = string.Empty,
+                //    sort = maxSort + 1,
+                //};
+                //AddBatchRoutingRules(ref item2, Utils.GetEmbedText(Global.CustomRoutingFileName + "white"));
 
                 //Blacklist
                 var item3 = new RoutingItem()
                 {
-                    remarks = $"{ver}黑名单(Blacklist)",
+                    remarks = $"{ver}(Blacklist)",
                     url = string.Empty,
                     sort = maxSort + 2,
                 };
@@ -1645,7 +1647,7 @@ namespace ServiceLib.Handler
                 //Global
                 var item1 = new RoutingItem()
                 {
-                    remarks = $"{ver}全局(Global)",
+                    remarks = $"{ver}(Global)",
                     url = string.Empty,
                     sort = maxSort + 3,
                 };
@@ -1653,7 +1655,7 @@ namespace ServiceLib.Handler
 
                 if (!blImportAdvancedRules)
                 {
-                    SetDefaultRouting(config, item2);
+                    SetDefaultRouting(config, item3);
                 }
             }
 

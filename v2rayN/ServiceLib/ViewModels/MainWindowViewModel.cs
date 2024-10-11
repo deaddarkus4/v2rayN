@@ -544,6 +544,7 @@ namespace ServiceLib.ViewModels
                 await _updateView?.Invoke(EViewAction.AddServerViaClipboard, null);
                 return;
             }
+            
             int ret = ConfigHandler.AddBatchServers(_config, clipboardData, _config.subIndexId, false);
             if (ret > 0)
             {

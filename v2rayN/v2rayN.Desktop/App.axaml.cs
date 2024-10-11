@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using System.Timers;
 using v2rayN.Desktop.ViewModels;
 using v2rayN.Desktop.Views;
 
@@ -10,6 +11,44 @@ public partial class App : Application
 {
     //public static EventWaitHandle ProgramStarted;
 
+    private static System.Timers.Timer updateTimer;
+
+    public static void UpdateRuBlockList()
+    {
+        Logging.SaveLog("Start to update RU Block list..");
+
+        var localSrss = Utils.GetBinPath("srss");
+
+        Directory.CreateDirectory(localSrss);
+
+        using (var client = new HttpClient())
+        {
+            using (var s = client.GetStreamAsync("https://github.com/deaddarkus4/ru-block-sing_box-rules/releases/latest/download/geoip-ru-block.srs"))
+            {
+                
+                using (var fs = new FileStream($"{localSrss}/geoip-ru-block.srs", FileMode.OpenOrCreate))
+                {
+                    s.Result.CopyTo(fs);
+                }
+            }
+
+            using (var s = client.GetStreamAsync("https://github.com/deaddarkus4/ru-block-sing_box-rules/releases/latest/download/geosite-ru-block.srs"))
+            {
+                using (var fs = new FileStream($"{localSrss}/geosite-ru-block.srs", FileMode.OpenOrCreate))
+                {
+                    s.Result.CopyTo(fs);
+                }
+            }
+        }
+        Logging.SaveLog("RU Block list updated.");
+    }
+
+    private static void OnTimedUpdateEvent(Object source, System.Timers.ElapsedEventArgs e)
+    {
+
+        UpdateRuBlockList();
+    }
+
     public override void Initialize()
     {
         if (!AppHandler.Instance.InitApp())
@@ -17,6 +56,14 @@ public partial class App : Application
             Environment.Exit(0);
             return;
         }
+        UpdateRuBlockList();
+
+        updateTimer = new System.Timers.Timer();
+        updateTimer.Interval = 1000 * 60 * 60 * 4;
+        updateTimer.Elapsed += OnTimedUpdateEvent;
+        updateTimer.AutoReset = true;
+        updateTimer.Enabled = true;
+
         AvaloniaXamlLoader.Load(this);
 
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
