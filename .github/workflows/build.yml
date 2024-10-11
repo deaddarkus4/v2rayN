@@ -37,6 +37,12 @@ jobs:
     #   run: |
     #     7z a -mx9 ..\v2rayN.7z $env:Wap_Project_Directory
 
+    - name: Set ENV variables
+      run: |
+        echo "RELEASE_NAME=V2RayN-$(date +%Y%m%d)" >> $GITHUB_ENV
+        echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        echo "RELEASE_DATE=$(date +'%F %T %Z')" >> $GITHUB_ENV
+
     - name: Push assets to release branch
       run: |
         cd v2rayN || exit 1
