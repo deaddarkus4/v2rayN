@@ -62,7 +62,7 @@ jobs:
         draft: false
         prerelease: false
         files: |
-          .\v2rayN\v2rayN.zip
+          v2rayN/v2rayN.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
