@@ -22,7 +22,7 @@
   {
     "remarks": "GFW IP",
     "outboundTag": "proxy",
-    "domain": [
+    "ip": [
       "geoip:ru-block"
     ]
   },

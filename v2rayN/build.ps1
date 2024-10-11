@@ -8,7 +8,7 @@ param (
 Write-Host 'Building'
 
 dotnet publish `
-	.\v2rayN\v2rayN.csproj `
+	.\v2rayN.Desktop\v2rayN.Desktop.csproj `
 	-c Release `
 	-r win-x64 `
 	--self-contained false `
