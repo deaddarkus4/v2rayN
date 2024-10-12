@@ -4,6 +4,9 @@ using Avalonia.Markup.Xaml;
 using System.Timers;
 using v2rayN.Desktop.ViewModels;
 using v2rayN.Desktop.Views;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Net.Http;
 
 namespace v2rayN.Desktop;
 
@@ -12,6 +15,7 @@ public partial class App : Application
     //public static EventWaitHandle ProgramStarted;
 
     private static System.Timers.Timer updateTimer;
+    private static String tagName;
 
     public static void UpdateRuBlockList()
     {
@@ -43,10 +47,24 @@ public partial class App : Application
         Logging.SaveLog("RU Block list updated.");
     }
 
-    private static void OnTimedUpdateEvent(Object source, System.Timers.ElapsedEventArgs e)
+    private async static void OnTimedUpdateEvent(Object source, System.Timers.ElapsedEventArgs e)
     {
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0)");
+            using (var response = await client.GetAsync("https://api.github.com/repos/deaddarkus4/ru-block-sing_box-rules/releases/latest"))
+            {
+                var data = await response.Content.ReadAsStringAsync();
+                var json = JsonNode.Parse(data);
+                if (json == null) return;
 
-        UpdateRuBlockList();
+                if (tagName != json["tag_name"]!.GetValue<String>())
+                {
+                    UpdateRuBlockList();
+                    tagName = json["tag_name"]!.GetValue<String>();
+                }
+            }
+        }
     }
 
     public override void Initialize()
