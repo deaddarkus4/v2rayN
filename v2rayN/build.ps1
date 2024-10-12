@@ -31,7 +31,7 @@ $SingBoxVersion = "sing-box-1.9.7-windows-amd64"
 
 Invoke-WebRequest "https://github.com/SagerNet/sing-box/releases/latest/download/$SingBoxVersion.zip" -OutFile "sing_box.zip"
 
-Expand-Archive -Path "sing_box.zip" -DestinationPath "$OutputPath"
+Expand-Archive -Path "sing_box.zip" -DestinationPath "."
 
 mkdir "$OutputPath\bin\sing_box"
 
