@@ -165,6 +165,8 @@ namespace ServiceLib.Handler
             config.systemProxyItem ??= new();
             config.webDavItem ??= new();
 
+            config.uiItem.colorModeDark = true;
+
             return 0;
         }
 
