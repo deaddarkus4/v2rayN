@@ -77,7 +77,7 @@ public partial class App : Application
         UpdateRuBlockList();
 
         updateTimer = new System.Timers.Timer();
-        updateTimer.Interval = 1000 * 60 * 60 * 4;
+        updateTimer.Interval = 1000 * 60 * 60 * 1;
         updateTimer.Elapsed += OnTimedUpdateEvent;
         updateTimer.AutoReset = true;
         updateTimer.Enabled = true;
