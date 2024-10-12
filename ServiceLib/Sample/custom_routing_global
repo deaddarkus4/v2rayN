@@ -1,0 +1,13 @@
+[
+	{
+		"remarks": "udp443",
+		"outboundTag": "block",
+		"port": "443",
+		"network": "udp"
+	},
+	{
+		"remarks": "Direct",
+		"port": "0-65535",
+		"outboundTag": "proxy"
+	}
+]

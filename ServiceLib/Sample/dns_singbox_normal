@@ -1,0 +1,36 @@
+{
+  "servers": [
+    {
+      "tag": "remote",
+      "address": "8.8.8.8",
+      "strategy": "ipv4_only",
+      "detour": "proxy"
+    },
+    {
+      "tag": "local",
+      "address": "77.88.8.8",
+      "strategy": "ipv4_only",
+      "detour": "direct"
+    },
+    {
+      "tag": "block",
+      "address": "rcode://success"
+    }
+  ],
+  "rules": [
+    {
+      "rule_set": [
+        "geosite-cn",
+        "geosite-geolocation-cn"
+      ],
+      "server": "local"
+    },
+    {
+      "rule_set": [
+        "geosite-category-ads-all"
+      ],
+      "server": "block"
+    }
+  ],
+  "final": "remote"
+}

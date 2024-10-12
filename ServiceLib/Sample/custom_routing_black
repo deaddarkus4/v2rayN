@@ -1,0 +1,65 @@
+[
+  {
+    "remarks": "bittorrent",
+    "outboundTag": "direct",
+    "protocol": [
+      "bittorrent"
+    ]
+  },
+  {
+    "remarks": "udp443",
+    "outboundTag": "block",
+    "port": "443",
+    "network": "udp"
+  },
+  {
+    "remarks": "GFW Site",
+    "outboundTag": "proxy",
+    "domain": [
+      "geosite:ru-block"
+    ]
+  },
+  {
+    "remarks": "GFW IP",
+    "outboundTag": "proxy",
+    "ip": [
+      "geoip:ru-block"
+    ]
+  },
+  {
+    "remarks": "Applications",
+    "outboundTag": "proxy",
+    "process": [
+      "Discord.exe"
+    ]
+  },
+  {
+    "remarks": "Blocked services",
+    "outboundTag": "proxy",
+    "domain": [
+      "regexp:.*discord.*$",
+      "regexp:.*tiktok.*$"
+    ]
+  },
+  {
+    "remarks": "Google",
+    "outboundTag": "proxy",
+    "ip": [
+      "1.0.0.1",
+      "1.1.1.1",
+      "8.8.8.8",
+      "8.8.4.4",
+      "geoip:facebook",
+      "geoip:fastly",
+      "geoip:google",
+      "geoip:netflix",
+      "geoip:telegram",
+      "geoip:twitter"
+    ]
+  },
+  {
+    "remarks": "Direct",
+    "port": "0-65535",
+    "outboundTag": "direct"
+  }
+]
