@@ -51,19 +51,27 @@ public partial class App : Application
     {
         using (var client = new HttpClient())
         {
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0)");
-            using (var response = await client.GetAsync("https://api.github.com/repos/deaddarkus4/ru-block-sing_box-rules/releases/latest"))
+            
+            try
             {
-                var data = await response.Content.ReadAsStringAsync();
-                var json = JsonNode.Parse(data);
-                if (json == null) return;
-
-                if (tagName != json["tag_name"]!.GetValue<String>())
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0)");
+                using (var response = await client.GetAsync("https://api.github.com/repos/deaddarkus4/ru-block-sing_box-rules/releases/latest"))
                 {
-                    UpdateRuBlockList();
-                    tagName = json["tag_name"]!.GetValue<String>();
+                    var data = await response.Content.ReadAsStringAsync();
+                    var json = JsonNode.Parse(data);
+                    if (json == null) return;
+
+                    if (tagName != json["tag_name"]!.GetValue<String>())
+                    {
+                        UpdateRuBlockList();
+                        tagName = json["tag_name"]!.GetValue<String>();
+                    }
                 }
             }
+            catch (Exception)
+            {
+            }
+
         }
     }
 
@@ -74,7 +82,14 @@ public partial class App : Application
             Environment.Exit(0);
             return;
         }
-        UpdateRuBlockList();
+        try
+        {
+            UpdateRuBlockList();
+        }
+        catch (Exception)
+        {
+        }
+        
 
         updateTimer = new System.Timers.Timer();
         updateTimer.Interval = 1000 * 60 * 60 * 1;
